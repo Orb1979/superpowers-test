@@ -1,5 +1,7 @@
 package com.library.publisher;
 
+import com.library.book.BookRepository;
+import com.library.book.BookSummaryResponse;
 import com.library.common.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +14,11 @@ import java.util.UUID;
 public class PublisherService {
 
     private final PublisherRepository repository;
+    private final BookRepository bookRepository;
 
-    public PublisherService(PublisherRepository repository) {
+    public PublisherService(PublisherRepository repository, BookRepository bookRepository) {
         this.repository = repository;
+        this.bookRepository = bookRepository;
     }
 
     @Transactional(readOnly = true)
@@ -25,6 +29,12 @@ public class PublisherService {
     @Transactional(readOnly = true)
     public PublisherResponse findById(UUID id) {
         return PublisherResponse.from(get(id));
+    }
+
+    @Transactional(readOnly = true)
+    public List<BookSummaryResponse> findBooksByPublisherId(UUID id) {
+        get(id);
+        return bookRepository.findAllByPublisherId(id).stream().map(BookSummaryResponse::from).toList();
     }
 
     public PublisherResponse create(PublisherRequest request) {

@@ -1,5 +1,6 @@
 package com.library.publisher;
 
+import com.library.book.BookSummaryResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,11 @@ public class PublisherController {
     @GetMapping("/{id}")
     public PublisherResponse get(@PathVariable UUID id) {
         return service.findById(id);
+    }
+
+    @GetMapping("/{id}/books")
+    public List<BookSummaryResponse> books(@PathVariable UUID id) {
+        return service.findBooksByPublisherId(id);
     }
 
     @PostMapping

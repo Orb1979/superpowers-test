@@ -74,6 +74,14 @@ class BookIntegrationTest {
 
         String bookId = JsonPath.read(bookJson, "$.id");
 
+        mockMvc.perform(get("/api/authors/" + authorId + "/books"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value("Notes"));
+
+        mockMvc.perform(get("/api/publishers/" + publisherId + "/books"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value("Notes"));
+
         mockMvc.perform(delete("/api/authors/" + authorId)).andExpect(status().isNoContent());
         mockMvc.perform(get("/api/books/" + bookId))
                 .andExpect(status().isOk())

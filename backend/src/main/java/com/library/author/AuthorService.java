@@ -1,5 +1,7 @@
 package com.library.author;
 
+import com.library.book.BookRepository;
+import com.library.book.BookSummaryResponse;
 import com.library.common.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +13,11 @@ import java.util.UUID;
 @Transactional
 public class AuthorService {
     private final AuthorRepository repository;
+    private final BookRepository bookRepository;
 
-    public AuthorService(AuthorRepository repository) {
+    public AuthorService(AuthorRepository repository, BookRepository bookRepository) {
         this.repository = repository;
+        this.bookRepository = bookRepository;
     }
 
     @Transactional(readOnly = true)
@@ -24,6 +28,12 @@ public class AuthorService {
     @Transactional(readOnly = true)
     public AuthorResponse findById(UUID id) {
         return AuthorResponse.from(get(id));
+    }
+
+    @Transactional(readOnly = true)
+    public List<BookSummaryResponse> findBooksByAuthorId(UUID id) {
+        get(id);
+        return bookRepository.findAllByAuthorId(id).stream().map(BookSummaryResponse::from).toList();
     }
 
     public AuthorResponse create(AuthorRequest request) {

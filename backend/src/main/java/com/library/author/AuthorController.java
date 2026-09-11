@@ -1,5 +1,6 @@
 package com.library.author;
 
+import com.library.book.BookSummaryResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,11 @@ public class AuthorController {
 
     @GetMapping("/{id}")
     public AuthorResponse get(@PathVariable UUID id) { return service.findById(id); }
+
+    @GetMapping("/{id}/books")
+    public List<BookSummaryResponse> books(@PathVariable UUID id) {
+        return service.findBooksByAuthorId(id);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
