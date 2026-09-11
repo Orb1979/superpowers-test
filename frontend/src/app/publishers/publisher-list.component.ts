@@ -61,13 +61,26 @@ export class PublisherListComponent implements OnInit {
   }
 
   onDelete(publisher: Publisher): void {
-    if (!confirm('Delete publisher?')) {
-      return;
-    }
-    this.publisherService.delete(publisher.id).subscribe({
-      next: () => this.load(),
+    this.publisherService.listBooksByPublisher(publisher.id).subscribe({
+      next: (books) => {
+        const message =
+          books.length === 0
+            ? 'Delete this publisher?'
+            : `This publisher is used in the following books. Removing the publisher will unlink it from those books: ${books
+                .map((b) => b.title)
+                .join(', ')}. Continue?`;
+        if (!confirm(message)) {
+          return;
+        }
+        this.publisherService.delete(publisher.id).subscribe({
+          next: () => this.load(),
+          error: () => {
+            this.error = 'Failed to delete publisher.';
+          },
+        });
+      },
       error: () => {
-        this.error = 'Failed to delete publisher.';
+        this.error = 'Failed to load linked books for publisher.';
       },
     });
   }

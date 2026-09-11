@@ -63,13 +63,26 @@ export class AuthorListComponent implements OnInit {
   }
 
   onDelete(author: Author): void {
-    if (!confirm('Delete author?')) {
-      return;
-    }
-    this.authorService.delete(author.id).subscribe({
-      next: () => this.load(),
+    this.authorService.listBooksByAuthor(author.id).subscribe({
+      next: (books) => {
+        const message =
+          books.length === 0
+            ? 'Delete this author?'
+            : `This author is linked to the following books. Removing the author will unlink them from those books: ${books
+                .map((b) => b.title)
+                .join(', ')}. Continue?`;
+        if (!confirm(message)) {
+          return;
+        }
+        this.authorService.delete(author.id).subscribe({
+          next: () => this.load(),
+          error: () => {
+            this.error = 'Failed to delete author.';
+          },
+        });
+      },
       error: () => {
-        this.error = 'Failed to delete author.';
+        this.error = 'Failed to load linked books for author.';
       },
     });
   }
