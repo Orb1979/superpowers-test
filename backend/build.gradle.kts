@@ -13,6 +13,8 @@ java {
     }
 }
 
+extra["testcontainers.version"] = "1.21.3"
+
 repositories {
     mavenCentral()
 }
@@ -29,6 +31,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
+    testImplementation("com.jayway.jsonpath:json-path")
 }
 
 tasks.withType<Test> {
