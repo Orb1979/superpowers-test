@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 CREATE TABLE publisher (
     id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -21,7 +23,7 @@ CREATE TABLE book (
 );
 
 CREATE TABLE author_book (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     author_id UUID NOT NULL,
     book_id UUID NOT NULL,
     CONSTRAINT uq_author_book UNIQUE (author_id, book_id),
@@ -32,7 +34,7 @@ CREATE TABLE author_book (
 );
 
 CREATE TABLE book_publisher (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     book_id UUID NOT NULL,
     publisher_id UUID NOT NULL,
     CONSTRAINT uq_book_publisher UNIQUE (book_id, publisher_id),
