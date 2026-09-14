@@ -1,4 +1,6 @@
-package com.library.book;
+package com.library.dto;
+
+import com.library.entity.Book;
 
 import java.util.UUID;
 

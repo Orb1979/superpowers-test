@@ -1,6 +1,9 @@
-package com.library.author;
+package com.library.web;
 
-import com.library.book.BookSummaryResponse;
+import com.library.dto.AuthorRequest;
+import com.library.dto.AuthorResponse;
+import com.library.dto.BookSummaryResponse;
+import com.library.service.AuthorService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

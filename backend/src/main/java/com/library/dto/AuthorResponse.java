@@ -1,4 +1,6 @@
-package com.library.author;
+package com.library.dto;
+
+import com.library.entity.Author;
 
 import java.time.LocalDate;
 import java.util.UUID;

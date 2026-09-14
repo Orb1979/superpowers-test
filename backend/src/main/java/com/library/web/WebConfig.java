@@ -1,4 +1,4 @@
-package com.library.config;
+package com.library.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

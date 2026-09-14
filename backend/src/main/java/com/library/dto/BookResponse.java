@@ -1,7 +1,6 @@
-package com.library.book;
+package com.library.dto;
 
-import com.library.author.AuthorResponse;
-import com.library.publisher.PublisherResponse;
+import com.library.entity.Book;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,7 +1,5 @@
-package com.library.book;
+package com.library.entity;
 
-import com.library.author.Author;
-import com.library.publisher.Publisher;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
