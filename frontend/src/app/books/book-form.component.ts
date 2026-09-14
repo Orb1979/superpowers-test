@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Author } from '../models/author.model';
 import { BookRequest } from '../models/book.model';
@@ -12,6 +13,24 @@ import { PublisherService } from '../services/publisher.service';
   selector: 'app-book-form',
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
+  styles: [
+    `
+      .field-error label,
+      .field-error .field-error-text {
+        color: #c62828;
+      }
+
+      .field-error input {
+        border-color: #c62828;
+        outline-color: #c62828;
+      }
+
+      .field-error-text {
+        margin: 0.25rem 0 0;
+        font-size: 0.875rem;
+      }
+    `,
+  ],
   template: `
     <h1>{{ isEdit ? 'Edit book' : 'Create book' }}</h1>
     @if (error) {
@@ -34,9 +53,12 @@ import { PublisherService } from '../services/publisher.service';
         <label for="pages">Pages</label>
         <input id="pages" type="number" formControlName="pages" />
       </div>
-      <div>
+      <div [class.field-error]="isbnError">
         <label for="isbn">ISBN</label>
-        <input id="isbn" type="text" formControlName="isbn" />
+        <input id="isbn" type="text" formControlName="isbn" (input)="clearIsbnError()" />
+        @if (isbnError) {
+          <p class="field-error-text">{{ isbnError }}</p>
+        }
       </div>
       <div>
         <label for="authorIds">Authors</label>
@@ -67,6 +89,7 @@ export class BookFormComponent implements OnInit {
   private bookId: string | null = null;
   saving = false;
   error = '';
+  isbnError = '';
   authors: Author[] = [];
   publishers: Publisher[] = [];
 
@@ -131,6 +154,10 @@ export class BookFormComponent implements OnInit {
     }
   }
 
+  clearIsbnError(): void {
+    this.isbnError = '';
+  }
+
   onSubmit(): void {
     if (this.form.invalid) {
       return;
@@ -148,6 +175,8 @@ export class BookFormComponent implements OnInit {
     };
 
     this.saving = true;
+    this.error = '';
+    this.isbnError = '';
     const request$ =
       this.isEdit && this.bookId
         ? this.bookService.update(this.bookId, request)
@@ -158,10 +187,29 @@ export class BookFormComponent implements OnInit {
         this.saving = false;
         void this.router.navigate(['/books']);
       },
-      error: () => {
+      error: (err: unknown) => {
         this.saving = false;
-        this.error = 'Failed to save book.';
+        this.handleSaveError(err);
       },
     });
+  }
+
+  private handleSaveError(err: unknown): void {
+    if (!(err instanceof HttpErrorResponse)) {
+      this.error = 'Failed to save book.';
+      return;
+    }
+
+    const body = err.error as { message?: string; field?: string } | null;
+    const message = body?.message?.trim();
+    const field = body?.field;
+
+    if (err.status === 409 && (field === 'isbn' || message?.toLowerCase().includes('isbn'))) {
+      this.isbnError = message || 'ISBN is already in use';
+      this.form.controls.isbn.markAsTouched();
+      return;
+    }
+
+    this.error = message || 'Failed to save book.';
   }
 }
