@@ -4,6 +4,7 @@ import com.library.dto.BookRequest;
 import com.library.dto.BookResponse;
 import com.library.service.BookService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/books")
+@RequiredArgsConstructor
 public class BookController {
 
     private final BookService service;
-
-    public BookController(BookService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<BookResponse> list() {

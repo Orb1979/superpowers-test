@@ -1,12 +1,20 @@
 package com.library.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "book")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Book {
 
     @Id
@@ -42,8 +50,6 @@ public class Book {
     )
     private Set<Publisher> publishers = new HashSet<>();
 
-    protected Book() {}
-
     public Book(UUID id, String title, String subTitle, String description, Integer pages, String isbn) {
         this.id = id;
         this.title = title;
@@ -52,19 +58,4 @@ public class Book {
         this.pages = pages;
         this.isbn = isbn;
     }
-
-    public UUID getId() { return id; }
-    public String getTitle() { return title; }
-    public String getSubTitle() { return subTitle; }
-    public String getDescription() { return description; }
-    public Integer getPages() { return pages; }
-    public String getIsbn() { return isbn; }
-    public Set<Author> getAuthors() { return authors; }
-    public Set<Publisher> getPublishers() { return publishers; }
-
-    public void setTitle(String title) { this.title = title; }
-    public void setSubTitle(String subTitle) { this.subTitle = subTitle; }
-    public void setDescription(String description) { this.description = description; }
-    public void setPages(Integer pages) { this.pages = pages; }
-    public void setIsbn(String isbn) { this.isbn = isbn; }
 }
