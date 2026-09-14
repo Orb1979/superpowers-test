@@ -13,24 +13,6 @@ import { PublisherService } from '../services/publisher.service';
   selector: 'app-book-form',
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
-  styles: [
-    `
-      .field-error label,
-      .field-error .field-error-text {
-        color: #c62828;
-      }
-
-      .field-error input {
-        border-color: #c62828;
-        outline-color: #c62828;
-      }
-
-      .field-error-text {
-        margin: 0.25rem 0 0;
-        font-size: 0.875rem;
-      }
-    `,
-  ],
   template: `
     <h1>{{ isEdit ? 'Edit book' : 'Create book' }}</h1>
     @if (error) {
