@@ -5,6 +5,7 @@ import com.library.dto.PublisherRequest;
 import com.library.dto.PublisherResponse;
 import com.library.service.PublisherService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +14,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/publishers")
+@RequiredArgsConstructor
 public class PublisherController {
 
     private final PublisherService service;
-
-    public PublisherController(PublisherService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<PublisherResponse> list() {

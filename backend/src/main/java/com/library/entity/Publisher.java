@@ -4,10 +4,20 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.UUID;
 
 @Entity
 @Table(name = "publisher")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Publisher {
 
     @Id
@@ -17,19 +27,4 @@ public class Publisher {
     private String name;
 
     private String country;
-
-    protected Publisher() {}
-
-    public Publisher(UUID id, String name, String country) {
-        this.id = id;
-        this.name = name;
-        this.country = country;
-    }
-
-    public UUID getId() { return id; }
-    public String getName() { return name; }
-    public String getCountry() { return country; }
-
-    public void setName(String name) { this.name = name; }
-    public void setCountry(String country) { this.country = country; }
 }

@@ -5,6 +5,7 @@ import com.library.dto.AuthorResponse;
 import com.library.dto.BookSummaryResponse;
 import com.library.service.AuthorService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +14,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/authors")
+@RequiredArgsConstructor
 public class AuthorController {
     private final AuthorService service;
-
-    public AuthorController(AuthorService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<AuthorResponse> list() { return service.findAll(); }

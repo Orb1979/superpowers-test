@@ -7,6 +7,7 @@ import com.library.entity.Author;
 import com.library.exception.NotFoundException;
 import com.library.repository.AuthorRepository;
 import com.library.repository.BookRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,14 +16,10 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AuthorService {
     private final AuthorRepository repository;
     private final BookRepository bookRepository;
-
-    public AuthorService(AuthorRepository repository, BookRepository bookRepository) {
-        this.repository = repository;
-        this.bookRepository = bookRepository;
-    }
 
     @Transactional(readOnly = true)
     public List<AuthorResponse> findAll() {

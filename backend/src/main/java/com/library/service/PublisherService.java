@@ -7,6 +7,7 @@ import com.library.entity.Publisher;
 import com.library.exception.NotFoundException;
 import com.library.repository.BookRepository;
 import com.library.repository.PublisherRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,15 +16,11 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class PublisherService {
 
     private final PublisherRepository repository;
     private final BookRepository bookRepository;
-
-    public PublisherService(PublisherRepository repository, BookRepository bookRepository) {
-        this.repository = repository;
-        this.bookRepository = bookRepository;
-    }
 
     @Transactional(readOnly = true)
     public List<PublisherResponse> findAll() {

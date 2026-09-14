@@ -1,11 +1,21 @@
 package com.library.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Table(name = "author")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Author {
     @Id
     private UUID id;
@@ -18,22 +28,4 @@ public class Author {
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
-
-    protected Author() {}
-
-    public Author(UUID id, String firstName, String lastName, LocalDate birthDate) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-    }
-
-    public UUID getId() { return id; }
-    public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName; }
-    public LocalDate getBirthDate() { return birthDate; }
-
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
 }
