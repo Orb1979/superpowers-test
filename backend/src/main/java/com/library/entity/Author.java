@@ -1,4 +1,4 @@
-package com.library.author;
+package com.library.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;

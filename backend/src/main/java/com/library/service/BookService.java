@@ -1,10 +1,14 @@
-package com.library.book;
+package com.library.service;
 
-import com.library.author.Author;
-import com.library.author.AuthorRepository;
-import com.library.common.NotFoundException;
-import com.library.publisher.Publisher;
-import com.library.publisher.PublisherRepository;
+import com.library.dto.BookRequest;
+import com.library.dto.BookResponse;
+import com.library.entity.Author;
+import com.library.entity.Book;
+import com.library.entity.Publisher;
+import com.library.exception.NotFoundException;
+import com.library.repository.AuthorRepository;
+import com.library.repository.BookRepository;
+import com.library.repository.PublisherRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

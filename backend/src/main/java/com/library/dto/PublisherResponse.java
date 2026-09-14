@@ -1,4 +1,6 @@
-package com.library.publisher;
+package com.library.dto;
+
+import com.library.entity.Publisher;
 
 import java.util.UUID;
 

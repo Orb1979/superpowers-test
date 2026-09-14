@@ -1,5 +1,6 @@
-package com.library.common;
+package com.library.exception;
 
+import com.library.dto.ErrorResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
