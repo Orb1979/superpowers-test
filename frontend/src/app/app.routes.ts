@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
-import { BookListComponent } from './books/book-list.component';
-import { BookFormComponent } from './books/book-form.component';
-import { AuthorListComponent } from './authors/author-list.component';
-import { AuthorFormComponent } from './authors/author-form.component';
-import { PublisherListComponent } from './publishers/publisher-list.component';
-import { PublisherFormComponent } from './publishers/publisher-form.component';
+import { BookListComponent } from './features/books/book-list.component';
+import { BookFormComponent } from './features/books/book-form.component';
+import { AuthorListComponent } from './features/authors/author-list.component';
+import { AuthorFormComponent } from './features/authors/author-form.component';
+import { PublisherListComponent } from './features/publishers/publisher-list.component';
+import { PublisherFormComponent } from './features/publishers/publisher-form.component';
+
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'books' },

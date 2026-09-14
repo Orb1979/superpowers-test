@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { PublisherRequest } from '../models/publisher.model';
-import { PublisherService } from '../services/publisher.service';
+import { PublisherRequest } from '../../models/publisher.model';
+import { PublisherService } from '../../services/publisher.service';
 
 @Component({
   selector: 'app-publisher-form',

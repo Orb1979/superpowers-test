@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Publisher } from '../models/publisher.model';
-import { PublisherService } from '../services/publisher.service';
+import { Publisher } from '../../models/publisher.model';
+import { PublisherService } from '../../services/publisher.service';
 
 @Component({
   selector: 'app-publisher-list',

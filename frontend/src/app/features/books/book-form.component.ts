@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Author } from '../models/author.model';
-import { BookRequest } from '../models/book.model';
-import { Publisher } from '../models/publisher.model';
-import { AuthorService } from '../services/author.service';
-import { BookService } from '../services/book.service';
-import { PublisherService } from '../services/publisher.service';
+import { Author } from '../../models/author.model';
+import { BookRequest } from '../../models/book.model';
+import { Publisher } from '../../models/publisher.model';
+import { AuthorService } from '../../services/author.service';
+import { BookService } from '../../services/book.service';
+import { PublisherService } from '../../services/publisher.service';
 
 @Component({
   selector: 'app-book-form',
