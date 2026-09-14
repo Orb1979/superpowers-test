@@ -32,7 +32,9 @@ public class ApiExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> conflict(DataIntegrityViolationException ex) {
         String details = String.valueOf(ex.getMostSpecificCause().getMessage()).toLowerCase();
-        if (details.contains("book_isbn_key") || details.contains("(isbn)=")) {
+        if (details.contains("book_isbn_key")
+                || details.contains("(isbn)=")
+                || details.contains("isbn")) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(new ErrorResponse("ISBN is already in use", "isbn"));
         }
