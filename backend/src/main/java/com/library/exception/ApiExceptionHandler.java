@@ -22,13 +22,22 @@ public class ApiExceptionHandler {
                 .findFirst()
                 .map(err -> err.getField() + " " + err.getDefaultMessage())
                 .orElse("Validation failed");
-        return ResponseEntity.badRequest().body(new ErrorResponse(msg));
+        String field = ex.getBindingResult().getFieldErrors().stream()
+                .findFirst()
+                .map(err -> err.getField())
+                .orElse(null);
+        return ResponseEntity.badRequest().body(new ErrorResponse(msg, field));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> conflict(DataIntegrityViolationException ex) {
+        String details = String.valueOf(ex.getMostSpecificCause().getMessage()).toLowerCase();
+        if (details.contains("book_isbn_key") || details.contains("(isbn)=")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new ErrorResponse("ISBN is already in use", "isbn"));
+        }
         return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(new ErrorResponse("Data conflict (e.g. duplicate ISBN)"));
+                .body(new ErrorResponse("Data conflict"));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
