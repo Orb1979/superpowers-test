@@ -195,18 +195,22 @@ export class BookFormComponent implements OnInit {
   }
 
   private handleSaveError(err: unknown): void {
-    if (!(err instanceof HttpErrorResponse)) {
-      this.error = 'Failed to save book.';
-      return;
-    }
+    const httpErr = err as HttpErrorResponse;
+    const status = httpErr?.status;
+    const body = httpErr?.error;
+    const message =
+      typeof body === 'string'
+        ? body.trim()
+        : typeof body?.message === 'string'
+          ? body.message.trim()
+          : '';
+    const field = typeof body === 'object' && body !== null ? (body as { field?: string }).field : undefined;
 
-    const body = err.error as { message?: string; field?: string } | null;
-    const message = body?.message?.trim();
-    const field = body?.field;
-
-    if (err.status === 409 && (field === 'isbn' || message?.toLowerCase().includes('isbn'))) {
-      this.isbnError = message || 'ISBN is already in use';
+    // Book saves only hit 409 for duplicate ISBN; always surface it on the ISBN field.
+    if (status === 409 || field === 'isbn' || message.toLowerCase().includes('isbn')) {
+      this.isbnError = 'ISBN is already in use';
       this.form.controls.isbn.markAsTouched();
+      this.error = '';
       return;
     }
 
